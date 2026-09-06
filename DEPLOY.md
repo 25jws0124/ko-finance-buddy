@@ -27,11 +27,15 @@ Vercel은 서버 코드를 대신 돌려주고, 키는 서버에만 둡니다. �
 npm install
 ```
 
-프로젝트 루트(= `package.json` 이 있는 곳)에 **`.env.local`** 파일을 새로 만들고:
+프로젝트 루트(= `package.json` 이 있는 곳)에 **`.env.local`** 파일을 새로 만들고 **두 줄**을 넣습니다:
 
 ```
 GEMINI_API_KEY=여기에_본인_키
+GEMINI_MODEL=gemini-3.6-flash
 ```
+
+> `GEMINI_MODEL` 은 없어도 동작합니다(코드가 쓸 수 있는 모델을 자동으로 찾습니다).
+> 다만 심사 기간에 모델 탐색으로 시간을 낭비하지 않도록 고정해 두는 편이 안전합니다.
 
 그리고:
 
@@ -67,9 +71,11 @@ git push -u origin main
 3. 방금 만든 `ko-finance-buddy` 레포 옆의 **Import** 클릭
 4. 설정 화면이 뜹니다. Framework는 자동으로 `Next.js` 로 잡힙니다. **그대로 두세요.**
 5. **`Environment Variables` 섹션을 펼칩니다.** ← 이걸 빼먹으면 문서 분석이 안 됩니다
-   - Name: `GEMINI_API_KEY`
-   - Value: 본인 키 붙여넣기
-   - `Add` 클릭
+   - Name: `GEMINI_API_KEY` / Value: 본인 키 → `Add`
+   - Name: `GEMINI_MODEL` / Value: `gemini-3.6-flash` → `Add`
+
+   **`.env.local` 파일은 GitHub에 올라가지 않기 때문에, Vercel에는 여기서 직접 넣어야 합니다.**
+   로컬에서 잘 되는데 배포본만 안 되는 경우는 거의 100% 이 단계를 빠뜨린 것입니다.
 6. **Deploy** 클릭 → 2~3분 기다립니다.
 7. 끝나면 `https://ko-finance-buddy-xxxx.vercel.app` 같은 URL이 나옵니다. **이게 제출용 URL입니다.**
 
@@ -101,6 +107,7 @@ push만 하면 Vercel이 자동으로 다시 배포합니다. 버튼 누를 필�
 
 | 증상 | 원인 / 해결 |
 |---|---|
+| `404 NOT_FOUND` / "no longer available to new users" | 구글이 그 모델을 신규 사용자에게 닫은 것. 코드가 다음 후보 모델로 자동 전환하지만, `.env.local` 과 Vercel 환경변수의 `GEMINI_MODEL` 을 안내된 새 이름으로 바꾸면 즉시 해결됩니다 |
 | 배포는 됐는데 사진 분석에서 "서버에 LLM API 키가 설정되지 않았습니다" | STEP 4의 5번(환경변수)을 빼먹은 것. Vercel → 프로젝트 → `Settings` → `Environment Variables` 에서 `GEMINI_API_KEY` 추가 후, `Deployments` 탭에서 최신 배포의 `⋯` → **Redeploy** |
 | "요청이 몰리고 있습니다" | Gemini 무료 플랜의 분당 요청 제한. 30초 뒤 다시 시도하면 됩니다. 심사 시연 전에 한 번 미리 눌러 워밍업해두세요 |
 | 폰 사진 업로드가 실패 | 이미 클라이언트에서 긴 변 1280px / JPEG 0.8로 줄여서 보냅니다. 그래도 실패하면 `app/screens/Prep.js` 의 `resizeToBase64(file, 1024, 0.7)` 로 낮추세요 |

@@ -48,6 +48,7 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
   const [preview, setPreview] = useState(null);
   const [result, setResult] = useState(null);
   const [errMsg, setErrMsg] = useState('');
+  const [errDetail, setErrDetail] = useState(null);
   const fileRef = useRef(null);
 
   const toggle = (i) => setChecks(checks.map((c, k) => (k === i ? !c : c)));
@@ -68,6 +69,7 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
       const data = await res.json();
       if (!res.ok) {
         setErrMsg(data?.error || s.errGeneric);
+        setErrDetail(data?.detail ?? null);
         setPhase('error');
         return;
       }
@@ -79,6 +81,7 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
       setPhase('done');
     } catch {
       setErrMsg(s.errGeneric);
+      setErrDetail(null);
       setPhase('error');
     } finally {
       if (fileRef.current) fileRef.current.value = '';
@@ -90,6 +93,7 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
     setPreview(null);
     setResult(null);
     setErrMsg('');
+    setErrDetail(null);
   };
 
   const total = result
@@ -265,6 +269,32 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
             <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--warn-700)', marginBottom: 6 }}>
               {phase === 'error' ? errMsg : s.unreadableTitle}
             </div>
+            {phase === 'error' && errDetail ? (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: 'var(--warn-muted-2)',
+                  lineHeight: 1.6,
+                  marginBottom: 14,
+                  textAlign: 'left',
+                  background: 'rgba(255,255,255,.6)',
+                  borderRadius: 10,
+                  padding: '8px 10px',
+                  wordBreak: 'break-word',
+                }}
+              >
+                <b>진단 정보</b>
+                <br />
+                HTTP {String(errDetail.http)} · {String(errDetail.status ?? '-')}
+                {errDetail.message ? (
+                  <>
+                    <br />
+                    {errDetail.message}
+                  </>
+                ) : null}
+              </div>
+            ) : null}
+
             {phase === 'unreadable' ? (
               <div style={{ fontSize: 14, color: 'var(--warn-muted-2)', lineHeight: 1.6, marginBottom: 14 }}>
                 {s.unreadableBody}
