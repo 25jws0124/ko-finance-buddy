@@ -182,7 +182,6 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
           id="doc-photo"
           type="file"
           accept="image/*"
-          capture="environment"
           onChange={onPick}
           className="sr-only"
         />
