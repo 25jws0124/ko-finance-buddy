@@ -173,17 +173,23 @@ export async function POST(req) {
         },
   });
 
+  // 일시적 장애로 판단해 재시도할 상태코드
+  //  429 = 요청 한도 초과 / 500·502·503 = 구글 쪽 일시 과부하
+  const isTransient = (st) => st === 429 || st >= 500;
+
   async function call(model, withSchema) {
-    // 무료 티어는 분당 요청 수 제한이 낮다 → 429 는 지수 백오프로 최대 2회 재시도
     let r = null;
-    for (let attempt = 0; attempt <= 2; attempt++) {
+    for (let attempt = 0; attempt <= 3; attempt++) {
       r = await fetch(endpointFor(model), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'x-goog-api-key': key },
         body: JSON.stringify(makePayload(withSchema)),
       });
-      if (r.status !== 429) break;
-      if (attempt < 2) await sleep(1200 * Math.pow(2, attempt));
+      if (!isTransient(r.status)) break;
+      if (attempt < 3) {
+        console.error(`[analyze] ${model}: ${r.status} 일시 장애 → 재시도 ${attempt + 1}/3`);
+        await sleep(700 * Math.pow(2, attempt)); // 0.7s → 1.4s → 2.8s
+      }
     }
     return r;
   }
@@ -209,9 +215,10 @@ export async function POST(req) {
     for (const model of order) {
       res = await tryModel(model);
       usedModel = model;
-      // 404 = 이 키로는 그 모델을 못 쓴다 → 다음 후보로 넘어간다
-      if (res.status === 404) {
-        console.error(`[analyze] ${model}: 사용 불가(404) → 다음 모델 시도`);
+      // 404 = 이 키로 못 쓰는 모델 / 5xx = 재시도해도 계속 과부하
+      // 둘 다 "이 모델로는 안 된다"이므로 다음 후보 모델로 넘어간다
+      if (res.status === 404 || res.status >= 500) {
+        console.error(`[analyze] ${model}: ${res.status} → 다음 모델로 전환`);
         continue;
       }
       break;
@@ -228,10 +235,14 @@ export async function POST(req) {
     );
   }
 
-  if (res.status === 429) {
+  if (res.status === 429 || res.status >= 500) {
+    // 후보 모델을 전부 시도하고도 실패한 경우 = 구글 쪽 광범위한 일시 장애
     return Response.json(
-      { error: '요청이 몰리고 있습니다. 잠시 후 다시 시도해주세요.' },
-      { status: 429 }
+      {
+        error: '지금 AI 분석 서버가 혼잡합니다. 30초쯤 뒤에 다시 시도해주세요.',
+        detail: { http: res.status, status: 'UPSTREAM_BUSY', message: null },
+      },
+      { status: 503 }
     );
   }
 
