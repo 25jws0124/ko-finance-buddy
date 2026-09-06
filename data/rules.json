@@ -1,0 +1,330 @@
+{
+  "meta": {
+    "checked_at": "2026-09-06",
+    "note": "rules_total / rules_verified / sources_total / sources_verified 는 하드코딩하지 않고 lib/engine.js 의 getDbStatus() 가 이 파일에서 직접 계산한다."
+  },
+  "sources": [
+    {
+      "id": "kb-purpose",
+      "org": "KB국민은행",
+      "title": "금융거래목적확인 증빙서류 필요한 이유는? 통장 개설 전 알아두세요",
+      "url": "https://kbthink.com/fraud/transaction-purpose-docs.html",
+      "checked_at": "2026-09-06",
+      "verified": true,
+      "quote": "은행 지점 출금/이체한도: 1일 300만원 / ATM 출금/이체한도: 1일 100만원 / 인터넷·모바일뱅킹 이체한도: 1일 100만원. 2024년 8월 28일 '전기통신금융사기 피해 방지 및 피해금 환급에 관한 특별법'이 개정 시행되면서 의무적으로 적용됩니다."
+    },
+    {
+      "id": "kb-purpose-docs",
+      "org": "KB국민은행",
+      "title": "거래목적별 인정 증빙서류 안내",
+      "url": "https://kbthink.com/fraud/transaction-purpose-docs.html",
+      "checked_at": "2026-09-06",
+      "verified": true,
+      "quote": "급여 수령: 재직증명서, 근로소득원천징수영수증, 건강보험자격득실확인서 등 / 아르바이트비 수령: 고용주의 사업자등록증 사본, 근로계약서 등"
+    },
+    {
+      "id": "kb-foreigner-account",
+      "org": "KB국민은행",
+      "title": "외국인 계좌 개설 방법",
+      "url": "https://kbthink.com/saving-guide/foreigner-account.html",
+      "checked_at": "2026-09-06",
+      "verified": true,
+      "quote": "외국인등록증, 영주증, 국내거소신고증 중 하나를 준비해 주세요. 외국 여권이나 운전면허증은 사용할 수 없어요. 한국에서 처음 통장을 만드는 외국인이라면 은행에 방문해 직원과 먼저 상담해 주세요."
+    },
+    {
+      "id": "easylaw-d2-work",
+      "org": "법제처 찾기쉬운 생활법령정보",
+      "title": "외국인유학생 > 국내 생활 > 유학 중 아르바이트 > 시간제 취업(아르바이트)",
+      "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=2853&ccfNo=3&cciNo=6&cnpClsNo=1",
+      "checked_at": "2026-09-06",
+      "verified": true,
+      "quote": "원칙적으로 외국인유학생은 학업 목적 외 취업 활동(체류자격 외 활동)이 금지되어 있으나, 미리 법무부장관의 체류자격 외 활동허가를 받은 경우 외국인유학생도 그 체류자격에 해당하는 활동과 함께 시간제 취업(아르바이트)을 할 수 있습니다"
+    },
+    {
+      "id": "easylaw-register-change",
+      "org": "법제처 찾기쉬운 생활법령정보",
+      "title": "외국인근로자 취업 > 외국인근로자 체류 > 외국인등록 및 변경신고",
+      "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=2042&ccfNo=4&cciNo=1&cnpClsNo=1",
+      "checked_at": "2026-09-06",
+      "verified": true,
+      "quote": "다음의 어느 하나에 해당하는 사항이 변경되었을 때에는 15일 이내에 변경신고를 해야 합니다. 체류지를 변경하였을 때에는 전입한 날부터 15일 이내에 전입신고를 해야 합니다"
+    },
+    {
+      "id": "easylaw-e9-change",
+      "org": "법제처 찾기쉬운 생활법령정보",
+      "title": "외국인근로자 취업 > 외국인근로자 체류 > 체류자격 변경",
+      "url": "https://easylaw.go.kr/CSP/CnpClsMain.laf?popMenu=ov&csmSeq=2042&ccfNo=4&cciNo=1&cnpClsNo=3",
+      "checked_at": "2026-09-06",
+      "verified": false,
+      "quote": null
+    }
+  ],
+  "rules": [
+    {
+      "id": "r-account-open-any",
+      "visa": "*",
+      "task": "account_open",
+      "institution": "시중은행 영업점",
+      "eligibility": "conditional",
+      "required_docs": [
+        {
+          "ko": "외국인등록증",
+          "en": "Alien Registration Card",
+          "vi": "Thẻ đăng ký người nước ngoài",
+          "note_ko": "영주증·국내거소신고증도 가능. 여권만으로는 불가",
+          "note_en": "Residence card or overseas-Korean report card also accepted. A passport alone is not accepted",
+          "note_vi": "Thẻ thường trú hoặc thẻ cư trú cũng được. Chỉ hộ chiếu thì không được"
+        },
+        {
+          "ko": "여권",
+          "en": "Passport",
+          "vi": "Hộ chiếu",
+          "note_ko": "원본 (신분 대조용)",
+          "note_en": "Original, for identity check",
+          "note_vi": "Bản gốc, để đối chiếu danh tính"
+        },
+        {
+          "ko": "금융거래 목적 증빙서류",
+          "en": "Proof of transaction purpose",
+          "vi": "Giấy tờ chứng minh mục đích giao dịch",
+          "note_ko": "없으면 한도제한계좌로 개설됨",
+          "note_en": "Without it, the account is opened as a limited-transaction account",
+          "note_vi": "Nếu không có, tài khoản sẽ bị mở dưới dạng hạn mức giới hạn"
+        }
+      ],
+      "branch_required": true,
+      "why_branch": "KB국민은행은 한국에서 처음 통장을 만드는 외국인에게 영업점 방문 상담을 안내하고 있고, 신분증도 외국인등록증·영주증·국내거소신고증만 인정합니다.",
+      "risk_note": "거래목적 증빙 없이 개설하면 금융거래한도계좌(한도제한계좌)로 발급됩니다. 통장 자체는 정상적으로 나오기 때문에 본인은 제한 사실을 모르고, 나중에 인터넷·모바일뱅킹 이체가 1일 100만원으로 막혀 있는 것을 뒤늦게 알게 됩니다.",
+      "sources": [
+        "kb-foreigner-account",
+        "kb-purpose"
+      ],
+      "verified": true
+    },
+    {
+      "id": "r-account-open-d2",
+      "visa": "D-2",
+      "task": "account_open",
+      "institution": "시중은행 영업점",
+      "eligibility": "conditional",
+      "required_docs": [
+        {
+          "ko": "외국인등록증",
+          "en": "Alien Registration Card",
+          "vi": "Thẻ đăng ký người nước ngoài",
+          "note_ko": "여권만으로는 개설 불가",
+          "note_en": "A passport alone is not accepted",
+          "note_vi": "Chỉ hộ chiếu thì không mở được"
+        },
+        {
+          "ko": "여권",
+          "en": "Passport",
+          "vi": "Hộ chiếu",
+          "note_ko": "원본",
+          "note_en": "Original",
+          "note_vi": "Bản gốc"
+        },
+        {
+          "ko": "재학증명서 또는 입학허가서",
+          "en": "Certificate of Enrollment or Letter of Admission",
+          "vi": "Giấy chứng nhận đang học hoặc giấy báo nhập học",
+          "note_ko": "최근 발급본. 학비·생활비 목적 증빙으로 쓰입니다",
+          "note_en": "Recently issued. Used as proof of tuition / living-expense purpose",
+          "note_vi": "Bản mới cấp. Dùng làm chứng minh mục đích học phí/sinh hoạt phí"
+        }
+      ],
+      "branch_required": true,
+      "why_branch": "처음 개설하는 외국인은 영업점 상담이 안내되고, 목적 증빙 원본을 창구에서 대조해야 합니다.",
+      "risk_note": "재학증명서 없이 가면 목적 증빙이 안 되어 한도제한계좌로 발급됩니다. 유학생은 학교 포털에서 미리 출력해 가는 것이 가장 확실합니다.",
+      "sources": [
+        "kb-foreigner-account",
+        "kb-purpose"
+      ],
+      "verified": true
+    },
+    {
+      "id": "r-salary-d2",
+      "visa": "D-2",
+      "task": "salary_account",
+      "institution": "시중은행 영업점",
+      "eligibility": "conditional",
+      "required_docs": [
+        {
+          "ko": "외국인등록증",
+          "en": "Alien Registration Card",
+          "vi": "Thẻ đăng ký người nước ngoài",
+          "note_ko": "",
+          "note_en": "",
+          "note_vi": ""
+        },
+        {
+          "ko": "여권",
+          "en": "Passport",
+          "vi": "Hộ chiếu",
+          "note_ko": "원본",
+          "note_en": "Original",
+          "note_vi": "Bản gốc"
+        },
+        {
+          "ko": "근로계약서",
+          "en": "Employment Contract",
+          "vi": "Hợp đồng lao động",
+          "note_ko": "또는 고용주의 사업자등록증 사본",
+          "note_en": "Or a copy of the employer's business registration certificate",
+          "note_vi": "Hoặc bản sao giấy phép kinh doanh của chủ sử dụng lao động"
+        }
+      ],
+      "branch_required": true,
+      "why_branch": "아르바이트비 수령 목적은 근로계약서·사업자등록증 사본 원본 대조가 필요해 창구에서 처리됩니다.",
+      "risk_note": "유학생의 시간제 취업은 미리 법무부장관의 체류자격 외 활동허가를 받아야 합니다. 허가 없이 일한 급여를 받는 계좌를 만들려다 체류자격 문제가 먼저 드러날 수 있으니, 허가부터 확인하세요.",
+      "sources": [
+        "easylaw-d2-work",
+        "kb-purpose-docs"
+      ],
+      "verified": true
+    },
+    {
+      "id": "r-salary-e9",
+      "visa": "E-9",
+      "task": "salary_account",
+      "institution": "시중은행 영업점",
+      "eligibility": "conditional",
+      "required_docs": [
+        {
+          "ko": "외국인등록증",
+          "en": "Alien Registration Card",
+          "vi": "Thẻ đăng ký người nước ngoài",
+          "note_ko": "",
+          "note_en": "",
+          "note_vi": ""
+        },
+        {
+          "ko": "여권",
+          "en": "Passport",
+          "vi": "Hộ chiếu",
+          "note_ko": "원본",
+          "note_en": "Original",
+          "note_vi": "Bản gốc"
+        },
+        {
+          "ko": "재직증명서",
+          "en": "Certificate of Employment",
+          "vi": "Giấy xác nhận đang làm việc",
+          "note_ko": "또는 근로계약서 · 건강보험자격득실확인서",
+          "note_en": "Or an employment contract / health-insurance qualification certificate",
+          "note_vi": "Hoặc hợp đồng lao động / giấy xác nhận bảo hiểm y tế"
+        }
+      ],
+      "branch_required": true,
+      "why_branch": "급여 수령 목적 증빙(재직증명서·원천징수영수증·건강보험자격득실확인서)은 창구에서 원본을 확인합니다.",
+      "risk_note": "근무처가 바뀌면 15일 이내에 변경신고를 해야 합니다. 신고를 놓친 채 예전 회사 이름이 적힌 재직증명서를 내면 서류가 반려될 수 있습니다.",
+      "sources": [
+        "kb-purpose-docs",
+        "easylaw-register-change"
+      ],
+      "verified": true
+    },
+    {
+      "id": "r-limit-release-any",
+      "visa": "*",
+      "task": "limit_release",
+      "institution": "계좌를 개설한 은행 영업점",
+      "eligibility": "conditional",
+      "required_docs": [
+        {
+          "ko": "여권",
+          "en": "Passport",
+          "vi": "Hộ chiếu",
+          "note_ko": "원본",
+          "note_en": "Original",
+          "note_vi": "Bản gốc"
+        },
+        {
+          "ko": "외국인등록증",
+          "en": "Alien Registration Card",
+          "vi": "Thẻ đăng ký người nước ngoài",
+          "note_ko": "발급 전이면 신청 접수증",
+          "note_en": "If not yet issued, the application receipt",
+          "note_vi": "Nếu chưa được cấp, mang biên nhận nộp hồ sơ"
+        },
+        {
+          "ko": "거래목적 증빙서류",
+          "en": "Proof of transaction purpose",
+          "vi": "Giấy tờ chứng minh mục đích giao dịch",
+          "note_ko": "급여수령이면 재직증명서·원천징수영수증·건강보험자격득실확인서, 아르바이트비면 고용주 사업자등록증 사본·근로계약서",
+          "note_en": "For salary: certificate of employment / withholding tax receipt / health-insurance certificate. For part-time pay: employer's business registration copy / employment contract",
+          "note_vi": "Lương: giấy xác nhận làm việc, chứng từ khấu trừ thuế, giấy bảo hiểm y tế. Làm thêm: bản sao giấy phép kinh doanh, hợp đồng lao động"
+        }
+      ],
+      "branch_required": true,
+      "why_branch": "목적별 인정서류의 원본을 창구에서 대조해야 하며, 비대면으로는 목적 확인이 되지 않습니다.",
+      "risk_note": "목적마다 인정되는 서류가 다릅니다. 급여수령인데 근로계약서만 들고 가면 다시 와야 할 수 있습니다. 창구에 가기 전에 '무슨 목적으로 한도를 푸는지'를 먼저 정하고, 그 목적에 맞는 서류를 챙기세요.",
+      "sources": [
+        "kb-purpose",
+        "kb-purpose-docs"
+      ],
+      "verified": true
+    },
+    {
+      "id": "r-overseas-remit-any",
+      "visa": "*",
+      "task": "overseas_remit",
+      "institution": null,
+      "eligibility": "unknown",
+      "required_docs": [],
+      "branch_required": null,
+      "why_branch": null,
+      "risk_note": null,
+      "note": "검증된 공식 근거(기관명·문서명·확인일·원문)를 확보하지 못해 판정하지 않습니다.",
+      "sources": [
+        "easylaw-e9-change"
+      ],
+      "verified": false
+    }
+  ],
+  "scam_patterns": [
+    {
+      "id": "sp-account-lending",
+      "trigger_tasks": [
+        "account_open",
+        "salary_account"
+      ],
+      "title": {
+        "ko": "통장을 빌려달라거나 넘겨달라고 하는 경우",
+        "en": "Someone asks to borrow or take over your bank account",
+        "vi": "Có người xin mượn hoặc nhận chuyển tài khoản của bạn"
+      },
+      "body": {
+        "ko": "'한국 계좌가 없어서 그런다', '월급을 대신 받아야 한다', '통장만 빌려주면 수고비를 주겠다'는 제안이 대표적입니다. 통장·체크카드·비밀번호·인증서를 넘기는 순간 본인 명의 계좌가 범죄 자금 통로로 쓰일 수 있고, 이 경우 명의자 본인이 조사 대상이 됩니다.",
+        "en": "Typical lines are \"I don't have a Korean account\", \"someone has to receive my pay for me\", or \"just lend me the passbook and I'll pay you\". The moment you hand over a passbook, debit card, PIN or certificate, the account in your name can be used to move criminal funds — and the account holder is the one investigated.",
+        "vi": "Những câu quen thuộc: \"tôi không có tài khoản Hàn Quốc\", \"cần người nhận lương hộ\", \"chỉ cho mượn sổ thôi, sẽ trả công\". Ngay khi bạn giao sổ, thẻ, mật khẩu hay chứng thư, tài khoản mang tên bạn có thể bị dùng để luân chuyển tiền phạm tội — và người bị điều tra chính là chủ tài khoản."
+      },
+      "what_to_do": {
+        "ko": "누구에게도 통장·카드·비밀번호를 넘기지 마세요. 이미 넘겼다면 즉시 은행 영업점에 지급정지를 요청하고 경찰(112)에 신고하세요. 판단이 어려우면 외국인종합안내센터 1345(20개 언어 통역)에 먼저 물어보세요.",
+        "en": "Never hand your passbook, card or PIN to anyone. If you already did, ask your bank branch to suspend the account immediately and report to the police (112). If you are unsure, call the Foreigner Information Center 1345 first (interpretation in 20 languages).",
+        "vi": "Đừng giao sổ, thẻ hay mật khẩu cho bất kỳ ai. Nếu đã lỡ giao, hãy yêu cầu ngân hàng phong tỏa ngay và báo cảnh sát (112). Nếu chưa chắc, hãy gọi Trung tâm hỗ trợ người nước ngoài 1345 (thông dịch 20 ngôn ngữ)."
+      }
+    },
+    {
+      "id": "sp-limit-release-broker",
+      "trigger_tasks": [
+        "limit_release"
+      ],
+      "title": {
+        "ko": "수수료를 내면 한도를 풀어주겠다는 대행 제안",
+        "en": "A broker offering to lift your limit for a fee",
+        "vi": "Môi giới nhận \"gỡ hạn mức\" và thu phí"
+      },
+      "body": {
+        "ko": "'서류 만들어줄 테니 얼마만 달라', '아는 은행 직원이 있다'는 식의 제안이 있습니다. 한도 해제는 본인이 목적 증빙서류를 갖고 창구에 가면 수수료 없이 처리되는 절차입니다. 대행업자가 만들어 준 재직증명서·근로계약서는 위조 문서일 수 있고, 제출한 사람이 책임을 집니다.",
+        "en": "Offers like \"I'll prepare the documents for a fee\" or \"I know someone at the bank\". Lifting the limit is a procedure you complete yourself at a branch with genuine proof of purpose, and it does not require a fee. Documents produced by a broker may be forged, and the person who submits them is held responsible.",
+        "vi": "Kiểu chào mời \"tôi làm giấy tờ cho, đưa tôi ít tiền\" hay \"tôi quen người trong ngân hàng\". Việc gỡ hạn mức là thủ tục bạn tự làm tại quầy với giấy tờ thật và không mất phí. Giấy tờ do môi giới làm có thể là giả, và người nộp phải chịu trách nhiệm."
+      },
+      "what_to_do": {
+        "ko": "돈을 요구하면 그 자리에서 멈추고, 계좌를 만든 은행 영업점에 직접 물어보세요. 서류 이름이 헷갈리면 이 앱의 준비물 목록을 창구 직원에게 그대로 보여주면 됩니다.",
+        "en": "If money is requested, stop there and ask your own bank branch directly. If you are unsure about the document names, show the checklist in this app to the teller as it is.",
+        "vi": "Nếu bị đòi tiền, hãy dừng lại và hỏi trực tiếp chi nhánh ngân hàng của bạn. Nếu không rõ tên giấy tờ, chỉ cần đưa danh sách trong ứng dụng này cho nhân viên quầy xem."
+      }
+    }
+  ]
+}

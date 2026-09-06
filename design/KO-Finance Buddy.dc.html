@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+body{margin:0;background:#EDEFEF;font-family:Pretendard,-apple-system,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#2563EB;text-decoration:none}a:hover{color:#1D4ED8;text-decoration:underline}
+*{box-sizing:border-box}
+@keyframes shimmer{0%{background-position:-320px 0}100%{background-position:320px 0}}
+@keyframes popin{0%{transform:scale(.6);opacity:0}60%{transform:scale(1.08)}100%{transform:scale(1);opacity:1}}
+.scr::-webkit-scrollbar{width:0}
+</style>
+</helmet>
+
+<div style="padding:48px 56px 80px;display:flex;flex-direction:column;gap:40px">
+
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:760px">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:28px;height:28px;border-radius:9px;background:#0D7C74;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:800">K</div>
+      <div style="font-size:22px;font-weight:800;color:#111827;letter-spacing:-0.4px">KO-Finance Buddy — 모바일 목업</div>
+    </div>
+    <div style="font-size:14px;line-height:1.7;color:#6B7280">왼쪽 프레임은 실제로 눌러볼 수 있는 프로토타입입니다. 칩 선택 → 판정 → 준비물 → 확인 → 완료까지 이어지고, 버튼 비활성/활성/로딩과 체크 상태가 실제로 바뀝니다. 오른쪽은 흐름 안에서 잘 보이지 않는 예외 상태 3종입니다.</div>
+  </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:44px;align-items:flex-start">
+
+    <!-- ================= INTERACTIVE PHONE ================= -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font:600 11px ui-monospace,Menlo,monospace;padding:3px 8px;background:#0D7C74;color:#fff;border-radius:5px">LIVE</span>
+        <span style="font-size:13px;color:#6B7280">눌러서 흐름 확인 · <span style="color:#111827;font-weight:600">{{ screenName }}</span></span>
+      </div>
+
+      <div style="width:410px;height:864px;border-radius:52px;background:#111417;padding:10px;box-shadow:0 30px 60px -20px rgba(9,40,38,.45),0 0 0 1px rgba(0,0,0,.06)">
+        <div style="width:390px;height:844px;border-radius:42px;overflow:hidden;background:#FFFFFF;position:relative;display:flex;flex-direction:column">
+
+          <div style="height:52px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:15px;font-weight:600;color:#111827">
+            <span>9:41</span>
+            <span style="display:flex;gap:6px;align-items:center;font-size:11px;letter-spacing:2px">▮▮▮ ᯤ ▰</span>
+          </div>
+
+          <!-- ---------- HOME ---------- -->
+          <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+          <div class="scr" style="flex:1;overflow-y:auto;padding:4px 20px 130px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="width:26px;height:26px;border-radius:8px;background:#0D7C74;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">K</div>
+                <div style="font-size:17px;font-weight:800;color:#111827;letter-spacing:-0.3px">KO-Finance Buddy</div>
+              </div>
+              <div style="display:flex;gap:4px">
+                <div style="padding:5px 9px;border-radius:999px;background:#0D7C74;color:#fff;font-size:11px;font-weight:700">한국어</div>
+                <div style="padding:5px 9px;border-radius:999px;background:#F6F8F8;color:#6B7280;font-size:11px;font-weight:600">EN</div>
+                <div style="padding:5px 9px;border-radius:999px;background:#F6F8F8;color:#6B7280;font-size:11px;font-weight:600">VI</div>
+              </div>
+            </div>
+
+            <div style="background:#E6F4F1;border-radius:14px;padding:11px 13px;display:flex;gap:9px;align-items:flex-start;margin-bottom:18px">
+              <div style="width:18px;height:18px;flex:none;border-radius:6px;background:#0D7C74;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px">✓</div>
+              <div style="font-size:12.5px;line-height:1.55;color:#0B5A54;font-weight:500">규칙 DB <b style="font-weight:800">5/6건</b> 공식근거 검증 · 확인일 2026.09.06<br><span style="color:#0D7C74">근거가 없으면 답하지 않습니다</span></div>
+            </div>
+
+            <div style="border-radius:20px;padding:20px;background:{{ heroBg }};border:1px solid {{ heroBorder }};margin-bottom:16px">
+              <div style="font-size:12.5px;font-weight:700;color:#6B7280;letter-spacing:.2px;margin-bottom:10px">내 상황</div>
+              <div style="font-size:{{ heroSize }};font-weight:800;line-height:1.35;color:{{ heroColor }};letter-spacing:-0.6px;white-space:pre-line">{{ heroText }}</div>
+              <div style="font-size:14px;color:#6B7280;line-height:1.5;margin-top:8px">{{ heroSub }}</div>
+
+              <div style="margin-top:18px;display:flex;align-items:center;gap:10px">
+                <div style="flex:1;height:8px;border-radius:99px;background:#E5EAEA;overflow:hidden">
+                  <div style="height:100%;border-radius:99px;background:#0D7C74;width:{{ progressPct }};transition:width .35s ease"></div>
+                </div>
+                <div style="font-size:12.5px;font-weight:700;color:#0D7C74;white-space:nowrap">2단계 중 {{ stepDone }}단계</div>
+              </div>
+            </div>
+
+            <div style="font-size:14.5px;font-weight:700;color:#111827;margin:0 0 10px">1. 체류자격을 고르세요</div>
+            <div style="display:flex;gap:8px;margin-bottom:20px">
+              <div onClick="{{ pickD2 }}" style="flex:1;min-height:52px;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 14px;border-radius:14px;cursor:pointer;border:1.5px solid {{ d2Border }};background:{{ d2Bg }}">
+                <div style="font-size:15px;font-weight:700;color:{{ d2Fg }}">D-2 유학생</div>
+                <div style="font-size:11.5px;color:#6B7280">대학·대학원 재학</div>
+              </div>
+              <div onClick="{{ pickE9 }}" style="flex:1;min-height:52px;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 14px;border-radius:14px;cursor:pointer;border:1.5px solid {{ e9Border }};background:{{ e9Bg }}">
+                <div style="font-size:15px;font-weight:700;color:{{ e9Fg }}">E-9 비전문취업</div>
+                <div style="font-size:11.5px;color:#6B7280">고용허가제 근로</div>
+              </div>
+            </div>
+
+            <div style="font-size:14.5px;font-weight:700;color:#111827;margin:0 0 10px">2. 무엇을 하려고 하세요?</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px">
+              <div onClick="{{ pickT1 }}" style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;cursor:pointer;font-size:14.5px;font-weight:600;border:1.5px solid {{ t1Border }};background:{{ t1Bg }};color:{{ t1Fg }}">계좌 만들기</div>
+              <div onClick="{{ pickT2 }}" style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;cursor:pointer;font-size:14.5px;font-weight:600;border:1.5px solid {{ t2Border }};background:{{ t2Bg }};color:{{ t2Fg }}">급여·알바비 받을 계좌</div>
+              <div onClick="{{ pickT3 }}" style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;cursor:pointer;font-size:14.5px;font-weight:600;border:1.5px solid {{ t3Border }};background:{{ t3Bg }};color:{{ t3Fg }}">이체한도 풀기</div>
+              <div onClick="{{ pickT4 }}" style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;cursor:pointer;font-size:14.5px;font-weight:600;border:1.5px solid {{ t4Border }};background:{{ t4Bg }};color:{{ t4Fg }}">본국으로 송금하기</div>
+            </div>
+
+            <div style="font-size:12.5px;color:#9CA3AF;line-height:1.5;margin-bottom:24px">계좌번호·여권번호는 묻지 않아요. 고른 내용은 기기에만 남습니다.</div>
+
+            <div style="font-size:14.5px;font-weight:700;color:#111827;margin:0 0 10px">자주 쓰는 기능</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer">
+                <div style="width:30px;height:30px;border-radius:10px;background:#E6F4F1;display:flex;align-items:center;justify-content:center;font-size:15px">🗎</div>
+                <div style="font-size:13.5px;font-weight:700;color:#111827;line-height:1.4">문서 사진으로<br>이해하기</div>
+              </div>
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer">
+                <div style="width:30px;height:30px;border-radius:10px;background:#E6F4F1;display:flex;align-items:center;justify-content:center;font-size:15px">☑</div>
+                <div style="font-size:13.5px;font-weight:700;color:#111827;line-height:1.4">준비물<br>체크리스트</div>
+              </div>
+              <div style="background:#FEF6EC;border-radius:16px;padding:14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer">
+                <div style="width:30px;height:30px;border-radius:10px;background:#FBE7CD;display:flex;align-items:center;justify-content:center;font-size:15px;color:#B45309">!</div>
+                <div style="font-size:13.5px;font-weight:700;color:#8A3F07;line-height:1.4">이 상황의<br>사기 주의보</div>
+              </div>
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px;min-height:88px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer">
+                <div style="width:30px;height:30px;border-radius:10px;background:#E7EEFB;display:flex;align-items:center;justify-content:center;font-size:15px;color:#2563EB">⌕</div>
+                <div style="font-size:13.5px;font-weight:700;color:#111827;line-height:1.4">출처<br>모아보기</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 26px;background:rgba(255,255,255,.97);border-top:1px solid #EEF1F1">
+            <div onClick="{{ goResult }}" style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:{{ ctaCursor }};background:{{ ctaBg }};color:{{ ctaFg }}">내 상황으로 확인하기</div>
+            <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">{{ ctaHint }}</div>
+          </div>
+          </sc-if>
+
+          <!-- ---------- RESULT ---------- -->
+          <sc-if value="{{ isResult }}">
+          <div class="scr" style="flex:1;overflow-y:auto;padding:0 20px 130px">
+            <div style="display:flex;align-items:center;gap:12px;height:48px;margin-bottom:6px">
+              <div onClick="{{ goHome }}" style="width:36px;height:36px;margin-left:-8px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#111827;cursor:pointer">‹</div>
+              <div style="font-size:16px;font-weight:700;color:#111827">판정 결과</div>
+            </div>
+
+            <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:12px">D-2 유학생 · 이체한도 풀기</div>
+
+            <div style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;background:#E6F4F1;margin-bottom:14px">
+              <span style="width:8px;height:8px;border-radius:99px;background:#0D7C74"></span>
+              <span style="font-size:14px;font-weight:800;color:#0B5A54">조건부 가능</span>
+            </div>
+            <div style="font-size:26px;font-weight:800;line-height:1.4;letter-spacing:-0.7px;color:#111827;margin-bottom:22px">서류 2가지를 챙겨<br>영업점에 가면 풀 수 있어요</div>
+
+            <div style="border:1px solid #EEF1F1;border-radius:20px;padding:18px;margin-bottom:14px">
+              <div style="font-size:13px;font-weight:700;color:#6B7280;margin-bottom:14px">인터넷뱅킹 1회 이체한도</div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px"><span style="color:#6B7280">지금</span><span style="font-weight:700;color:#111827">100만원</span></div>
+                  <div style="height:14px;border-radius:99px;background:#EEF1F1;overflow:hidden"><div style="width:22%;height:100%;border-radius:99px;background:#B9C4C3"></div></div>
+                </div>
+                <div>
+                  <div style="display:flex;justify-content:space-between;font-size:13.5px;margin-bottom:6px"><span style="color:#0B5A54;font-weight:600">해제 후</span><span style="font-weight:800;color:#0D7C74">제한 없음</span></div>
+                  <div style="height:14px;border-radius:99px;background:#EEF1F1;overflow:hidden"><div style="width:100%;height:100%;border-radius:99px;background:#0D7C74"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#FEF6EC;border-radius:20px;padding:18px;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px">
+                <span style="width:20px;height:20px;border-radius:7px;background:#B45309;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">!</span>
+                <span style="font-size:13.5px;font-weight:800;color:#8A3F07">가장 놓치기 쉬운 함정</span>
+              </div>
+              <div style="font-size:15px;line-height:1.6;color:#7A3B08;font-weight:500">통장은 정상 발급돼서 본인은 제한계좌인 줄 몰라요. 등록금·월세처럼 큰 돈을 보낼 때 막힙니다.</div>
+            </div>
+
+            <div onClick="{{ toggleA1 }}" style="border:1px solid #EEF1F1;border-radius:16px;padding:16px;margin-bottom:8px;cursor:pointer">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+                <div style="font-size:15px;font-weight:700;color:#111827">한도제한계좌가 뭔가요?</div>
+                <div style="font-size:13px;color:#9CA3AF">{{ a1Icon }}</div>
+              </div>
+              <div style="font-size:14.5px;line-height:1.65;color:#4B5563;margin-top:{{ a1Gap }};max-height:{{ a1Max }};overflow:hidden;transition:max-height .25s ease">대포통장을 막기 위해, 처음 만든 통장은 하루에 보낼 수 있는 금액을 작게 묶어둡니다. 이것을 한도제한계좌라고 해요.</div>
+            </div>
+
+            <div onClick="{{ toggleA2 }}" style="border:1px solid #EEF1F1;border-radius:16px;padding:16px;margin-bottom:16px;cursor:pointer">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+                <div style="font-size:15px;font-weight:700;color:#111827">왜 영업점에 가야 하나요?</div>
+                <div style="font-size:13px;color:#9CA3AF">{{ a2Icon }}</div>
+              </div>
+              <div style="font-size:14.5px;line-height:1.65;color:#4B5563;margin-top:{{ a2Gap }};max-height:{{ a2Max }};overflow:hidden;transition:max-height .25s ease">직원이 서류 원본을 직접 보고 '금융거래 목적 확인'(이 돈을 왜 쓰는지 확인하는 절차)을 해야 해서, 앱만으로는 끝나지 않습니다.</div>
+            </div>
+
+            <div style="font-size:14.5px;font-weight:700;color:#111827;margin:0 0 10px">근거 출처</div>
+            <div style="border:1px solid #DCE9E7;background:#F7FBFA;border-radius:16px;padding:15px;margin-bottom:8px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">
+                <span style="width:17px;height:17px;border-radius:99px;background:#0D7C74;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">✓</span>
+                <span style="font-size:12px;font-weight:800;color:#0D7C74">원문 대조 완료</span>
+              </div>
+              <div style="font-size:14.5px;font-weight:600;color:#111827;line-height:1.5">KB국민은행 — 금융거래목적확인 증빙서류 안내</div>
+              <div style="font-size:12.5px;color:#6B7280;margin-top:4px">확인일 2026.09.06 · <a href="#">원문 보기</a></div>
+            </div>
+            <div style="border:1px solid #EEF1F1;background:#FAFBFB;border-radius:16px;padding:15px">
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:7px">
+                <span style="width:17px;height:17px;border-radius:99px;background:#D5DAD9;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">–</span>
+                <span style="font-size:12px;font-weight:800;color:#9CA3AF">원문 대조 전</span>
+              </div>
+              <div style="font-size:14.5px;font-weight:600;color:#6B7280;line-height:1.5">시중은행 공통 — 한도제한계좌 해제 기준 안내</div>
+              <div style="font-size:12.5px;color:#9CA3AF;margin-top:4px">아직 대조하지 않아 판정에 쓰지 않았습니다</div>
+            </div>
+
+            <div style="font-size:12.5px;color:#9CA3AF;line-height:1.6;margin-top:16px">이 서비스는 상품을 추천하지 않고, 조항과 주의할 이유만 보여드립니다.</div>
+          </div>
+
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 26px;background:rgba(255,255,255,.97);border-top:1px solid #EEF1F1">
+            <div onClick="{{ goPrep }}" style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer;background:#0D7C74;color:#fff">준비물 챙기러 가기</div>
+          </div>
+          </sc-if>
+
+          <!-- ---------- PREP ---------- -->
+          <sc-if value="{{ isPrep }}">
+          <div class="scr" style="flex:1;overflow-y:auto;padding:0 20px 130px">
+            <div style="display:flex;align-items:center;gap:12px;height:48px;margin-bottom:2px">
+              <div onClick="{{ goResult }}" style="width:36px;height:36px;margin-left:-8px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#111827;cursor:pointer">‹</div>
+              <div style="font-size:16px;font-weight:700;color:#111827">준비물 챙기기</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+              <div style="flex:1;height:8px;border-radius:99px;background:#EEF1F1;overflow:hidden"><div style="width:50%;height:100%;background:#0D7C74;border-radius:99px"></div></div>
+              <div style="font-size:12.5px;font-weight:700;color:#0D7C74;white-space:nowrap">2단계 중 1단계</div>
+            </div>
+
+            <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#111827;line-height:1.4;margin-bottom:4px">챙길 서류 {{ checkedCount }}가지 / 3가지</div>
+            <div style="font-size:14.5px;color:#6B7280;margin-bottom:16px">가방에 넣었으면 눌러서 체크하세요.</div>
+
+            <div style="border:1px solid #EEF1F1;border-radius:20px;overflow:hidden;margin-bottom:24px">
+              <div onClick="{{ toggleC1 }}" style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px;cursor:pointer;border-bottom:1px solid #F2F4F4;background:{{ c1Bg }}">
+                <div style="width:26px;height:26px;flex:none;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;background:{{ c1Box }};color:#fff;border:1.5px solid {{ c1Border }}">{{ c1Mark }}</div>
+                <div><div style="font-size:16px;font-weight:600;color:#111827">여권</div><div style="font-size:12.5px;color:#6B7280">원본</div></div>
+              </div>
+              <div onClick="{{ toggleC2 }}" style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px;cursor:pointer;border-bottom:1px solid #F2F4F4;background:{{ c2Bg }}">
+                <div style="width:26px;height:26px;flex:none;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;background:{{ c2Box }};color:#fff;border:1.5px solid {{ c2Border }}">{{ c2Mark }}</div>
+                <div><div style="font-size:16px;font-weight:600;color:#111827">외국인등록증</div><div style="font-size:12.5px;color:#6B7280">발급 전이면 신청 접수증</div></div>
+              </div>
+              <div onClick="{{ toggleC3 }}" style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px;cursor:pointer;background:{{ c3Bg }}">
+                <div style="width:26px;height:26px;flex:none;border-radius:99px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;background:{{ c3Box }};color:#fff;border:1.5px solid {{ c3Border }}">{{ c3Mark }}</div>
+                <div><div style="font-size:16px;font-weight:600;color:#111827">재학증명서 또는 입학허가서</div><div style="font-size:12.5px;color:#6B7280">최근 발급본</div></div>
+              </div>
+            </div>
+
+            <div style="font-size:17px;font-weight:800;color:#111827;margin-bottom:4px">서류가 한국어라 모르겠다면</div>
+            <div style="font-size:14.5px;color:#6B7280;line-height:1.55;margin-bottom:12px">사진을 올려보세요. 문서에 적힌 문장 그대로 풀어드려요.</div>
+
+            <sc-if value="{{ docIdle }}">
+            <div onClick="{{ startScan }}" style="border:1.5px dashed #B9CFCB;border-radius:20px;background:#F7FBFA;padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;margin-bottom:14px">
+              <div style="width:44px;height:44px;border-radius:14px;background:#E6F4F1;display:flex;align-items:center;justify-content:center;font-size:20px">◉</div>
+              <div style="font-size:15.5px;font-weight:700;color:#0B5A54">사진 올리기</div>
+              <div style="font-size:12.5px;color:#6B7280;text-align:center;line-height:1.5">사진은 저장하지 않고 바로 지웁니다</div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ docLoading }}">
+            <div style="border:1px solid #EEF1F1;border-radius:20px;padding:18px;margin-bottom:14px">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+                <div style="width:16px;height:16px;border-radius:99px;border:2.5px solid #E6F4F1;border-top-color:#0D7C74;animation:spin 1s linear infinite"></div>
+                <div style="font-size:14.5px;font-weight:700;color:#0B5A54">문서를 읽는 중이에요</div>
+              </div>
+              <div style="height:14px;border-radius:8px;margin-bottom:9px;background:linear-gradient(90deg,#F1F4F4 25%,#E7ECEC 37%,#F1F4F4 63%);background-size:320px 100%;animation:shimmer 1.3s infinite linear"></div>
+              <div style="height:14px;border-radius:8px;width:85%;margin-bottom:9px;background:linear-gradient(90deg,#F1F4F4 25%,#E7ECEC 37%,#F1F4F4 63%);background-size:320px 100%;animation:shimmer 1.3s infinite linear"></div>
+              <div style="height:14px;border-radius:8px;width:60%;background:linear-gradient(90deg,#F1F4F4 25%,#E7ECEC 37%,#F1F4F4 63%);background-size:320px 100%;animation:shimmer 1.3s infinite linear"></div>
+            </div>
+            </sc-if>
+
+            <sc-if value="{{ docDone }}">
+            <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+              <div style="display:flex;align-items:center;justify-content:space-between">
+                <div style="font-size:13px;font-weight:700;color:#0D7C74">읽기 완료 · 3가지로 정리했어요</div>
+                <div onClick="{{ resetScan }}" style="font-size:12.5px;color:#6B7280;cursor:pointer;text-decoration:underline">다시 찍기</div>
+              </div>
+              <div style="background:#E6F4F1;border-radius:18px;padding:16px">
+                <div style="font-size:12px;font-weight:800;color:#0D7C74;margin-bottom:6px">① 해야 할 일</div>
+                <div style="font-size:15.5px;font-weight:600;color:#0B3E3A;line-height:1.55">여권과 외국인등록증, 재학증명서를 들고 계좌를 만든 영업점 창구로 가세요.</div>
+                <div style="border-left:3px solid #A7CFC9;padding-left:10px;margin-top:10px;font-size:13px;color:#3F6A66;line-height:1.55">“실명확인증표 및 금융거래 목적 확인 서류를 지참하여 영업점을 방문하여야 합니다.”</div>
+              </div>
+              <div style="background:#FEF6EC;border-radius:18px;padding:16px">
+                <div style="font-size:12px;font-weight:800;color:#B45309;margin-bottom:6px">② 돈과 관련된 주의점</div>
+                <div style="font-size:15.5px;font-weight:600;color:#7A3B08;line-height:1.55">해제 전에는 인터넷뱅킹 1회 100만원을 넘길 수 없습니다. 등록금 송금은 막힐 수 있어요.</div>
+                <div style="border-left:3px solid #E5C79B;padding-left:10px;margin-top:10px;font-size:13px;color:#8A6236;line-height:1.55">“한도제한계좌는 전자금융 1일 100만원 이내로 이체가 제한됩니다.”</div>
+              </div>
+              <div style="background:#F6F8F8;border-radius:18px;padding:16px">
+                <div style="font-size:12px;font-weight:800;color:#6B7280;margin-bottom:6px">③ 추가 확인 필요</div>
+                <div style="font-size:15.5px;font-weight:600;color:#374151;line-height:1.55">서류 인정 범위는 은행마다 달라요. 방문 전 해당 영업점에 전화로 확인하세요.</div>
+                <div style="border-left:3px solid #D5DAD9;padding-left:10px;margin-top:10px;font-size:13px;color:#6B7280;line-height:1.55">“증빙서류는 영업점 판단에 따라 추가 요청될 수 있습니다.”</div>
+              </div>
+            </div>
+            </sc-if>
+
+            <div style="font-size:12.5px;color:#9CA3AF;line-height:1.6">업로드한 사진은 분석 직후 삭제되고, 서버에 남지 않습니다.</div>
+          </div>
+
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 26px;background:rgba(255,255,255,.97);border-top:1px solid #EEF1F1">
+            <div onClick="{{ goConfirm }}" style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;cursor:pointer;background:#0D7C74;color:#fff">확인 화면으로</div>
+          </div>
+          </sc-if>
+
+          <!-- ---------- CONFIRM ---------- -->
+          <sc-if value="{{ isConfirm }}">
+          <div class="scr" style="flex:1;overflow-y:auto;padding:0 20px 130px">
+            <div style="display:flex;align-items:center;gap:12px;height:48px;margin-bottom:2px">
+              <div onClick="{{ goPrep }}" style="width:36px;height:36px;margin-left:-8px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;color:#111827;cursor:pointer">‹</div>
+              <div style="font-size:16px;font-weight:700;color:#111827">은행 가기 전 최종 점검</div>
+            </div>
+
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+              <div style="flex:1;height:8px;border-radius:99px;background:#EEF1F1;overflow:hidden"><div style="width:100%;height:100%;background:#0D7C74;border-radius:99px"></div></div>
+              <div style="font-size:12.5px;font-weight:700;color:#0D7C74;white-space:nowrap">2단계 중 2단계</div>
+            </div>
+
+            <div style="border:1px solid #DCE9E7;background:#F7FBFA;border-radius:20px;padding:18px;margin-bottom:14px">
+              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E7EFEE"><span style="font-size:14px;color:#6B7280">내 상황</span><span style="font-size:14.5px;font-weight:700;color:#111827">D-2 · 이체한도 풀기</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E7EFEE"><span style="font-size:14px;color:#6B7280">판정</span><span style="font-size:14.5px;font-weight:800;color:#0D7C74">조건부 가능</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #E7EFEE"><span style="font-size:14px;color:#6B7280">준비물</span><span style="font-size:14.5px;font-weight:700;color:#111827">3개 중 3개 완료</span></div>
+              <div style="display:flex;justify-content:space-between;padding:9px 0"><span style="font-size:14px;color:#6B7280">방문</span><span style="font-size:14.5px;font-weight:700;color:#111827">영업점 방문 필요</span></div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px"><div style="font-size:12.5px;color:#6B7280;margin-bottom:5px">처리 방법</div><div style="font-size:15px;font-weight:700;color:#111827;line-height:1.4">비대면 불가<br>창구에서만</div></div>
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px"><div style="font-size:12.5px;color:#6B7280;margin-bottom:5px">예상 소요</div><div style="font-size:15px;font-weight:700;color:#111827;line-height:1.4">약 20~30분</div></div>
+              <div style="background:#F6F8F8;border-radius:16px;padding:14px"><div style="font-size:12.5px;color:#6B7280;margin-bottom:5px">수수료</div><div style="font-size:15px;font-weight:700;color:#111827;line-height:1.4">없음</div></div>
+              <div style="background:#E6F4F1;border-radius:16px;padding:14px"><div style="font-size:12.5px;color:#0D7C74;margin-bottom:5px">해제 후</div><div style="font-size:15px;font-weight:800;color:#0B5A54;line-height:1.4">인터넷뱅킹<br>한도 제한 없음</div></div>
+            </div>
+
+            <div style="background:#FEF6EC;border-radius:20px;padding:18px;margin-bottom:16px">
+              <div style="display:flex;align-items:center;gap:7px;margin-bottom:8px">
+                <span style="width:20px;height:20px;border-radius:7px;background:#B45309;color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center">!</span>
+                <span style="font-size:13.5px;font-weight:800;color:#8A3F07">이 업무에 붙는 사기 수법</span>
+              </div>
+              <div style="font-size:15px;line-height:1.6;color:#7A3B08;font-weight:500">수수료를 내면 한도를 풀어준다는 사람은 대행업자가 아니라 사기입니다. 한도 해제는 본인이 직접 은행에서만 가능해요.</div>
+            </div>
+
+            <div style="border-top:1px solid #EEF1F1;padding-top:14px">
+              <div style="font-size:12.5px;color:#6B7280;line-height:1.7">근거: KB국민은행 — 금융거래목적확인 증빙서류 안내 · <a href="#">원문 보기</a><br>정보 기준일 2026.09.06 · 근거가 없는 항목은 표시하지 않았습니다</div>
+            </div>
+          </div>
+
+          <div style="position:absolute;left:0;right:0;bottom:0;padding:14px 20px 26px;background:rgba(255,255,255,.97);border-top:1px solid #EEF1F1">
+            <div onClick="{{ finish }}" style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:9px;font-size:16.5px;font-weight:700;cursor:pointer;background:{{ finishBg }};color:#fff">
+              <sc-if value="{{ finishing }}"><span style="width:16px;height:16px;border-radius:99px;border:2.5px solid rgba(255,255,255,.35);border-top-color:#fff;animation:spin .9s linear infinite"></span></sc-if>
+              <span>{{ finishLabel }}</span>
+            </div>
+          </div>
+          </sc-if>
+
+          <!-- ---------- DONE ---------- -->
+          <sc-if value="{{ isDone }}">
+          <div class="scr" style="flex:1;overflow-y:auto;padding:26px 20px 130px">
+            <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:26px 0 10px">
+              <div style="width:84px;height:84px;border-radius:99px;background:#E6F4F1;display:flex;align-items:center;justify-content:center;margin-bottom:18px;animation:popin .45s ease both">
+                <span style="font-size:38px;color:#0D7C74;font-weight:800;line-height:1">✓</span>
+              </div>
+              <div style="font-size:26px;font-weight:800;letter-spacing:-0.6px;color:#111827">은행 갈 준비가 끝났어요</div>
+              <div style="font-size:15.5px;color:#6B7280;line-height:1.6;margin-top:10px;max-width:300px">서류 3가지를 챙겨 영업점 창구에서 ‘금융거래 목적 확인’이라고 말하면 됩니다.</div>
+            </div>
+
+            <div style="border:1px solid #DCE9E7;background:#F7FBFA;border-radius:20px;padding:20px;margin:20px 0 14px">
+              <div style="font-size:12.5px;font-weight:700;color:#0D7C74;margin-bottom:10px">창구에서 이 화면을 그대로 보여주세요</div>
+              <div style="font-size:19px;font-weight:700;line-height:1.6;color:#111827;letter-spacing:-0.3px">“금융거래 목적 확인을 하러 왔습니다.<br>한도제한계좌를 해제하고 싶어요.”</div>
+              <div style="font-size:13px;color:#6B7280;margin-top:12px">여권 · 외국인등록증 · 재학증명서를 함께 냅니다</div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="min-height:52px;border-radius:16px;border:1.5px solid #0D7C74;color:#0D7C74;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer">체크리스트 이미지로 저장</div>
+              <div onClick="{{ goHome }}" style="min-height:52px;border-radius:16px;background:#F6F8F8;color:#374151;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;cursor:pointer">다른 금융업무 확인하기</div>
+            </div>
+
+            <div style="text-align:center;font-size:12.5px;color:#9CA3AF;line-height:1.6;margin-top:26px">이 서비스는 상품을 추천하지 않고, 절차만 안내합니다</div>
+          </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= VARIANTS ================= -->
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font:600 11px ui-monospace,Menlo,monospace;padding:3px 8px;background:#374151;color:#fff;border-radius:5px">STATES</span>
+        <span style="font-size:13px;color:#6B7280">예외 상태 3종</span>
+      </div>
+      <div style="display:flex;gap:28px;flex-wrap:wrap">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12.5px;font-weight:600;color:#6B7280">상세 — 공식기관 확인 필요 (D-2 × 본국으로 송금하기)</div>
+          <div style="width:410px;height:864px;border-radius:52px;background:#111417;padding:10px;box-shadow:0 30px 60px -20px rgba(9,40,38,.35)">
+            <div style="width:390px;height:844px;border-radius:42px;overflow:hidden;background:#FFFFFF;position:relative;display:flex;flex-direction:column">
+              <div style="height:52px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:15px;font-weight:600;color:#111827"><span>9:41</span><span style="font-size:11px;letter-spacing:2px">▮▮▮ ᯤ ▰</span></div>
+              <div style="flex:1;overflow:hidden;padding:0 20px">
+                <div style="display:flex;align-items:center;gap:12px;height:48px;margin-bottom:2px"><div style="font-size:19px;color:#111827;margin-left:-4px">‹</div><div style="font-size:16px;font-weight:700;color:#111827">판정 결과</div></div>
+                <div style="font-size:13px;color:#6B7280;font-weight:600;margin-bottom:12px">D-2 유학생 · 본국으로 송금하기</div>
+                <div style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;background:#EEF1F1;margin-bottom:14px">
+                  <span style="width:8px;height:8px;border-radius:99px;background:#9CA3AF"></span>
+                  <span style="font-size:14px;font-weight:800;color:#4B5563">공식기관 확인 필요</span>
+                </div>
+                <div style="font-size:25px;font-weight:800;line-height:1.42;letter-spacing:-0.7px;color:#374151;margin-bottom:14px">확인된 공식 근거가 없어<br>답을 만들지 않았어요</div>
+                <div style="font-size:15.5px;line-height:1.65;color:#6B7280;margin-bottom:22px">은행 영업점이나 출입국·외국인청에서 확인하세요. 저희가 추측해서 알려드리면 더 위험합니다.</div>
+
+                <div style="border:1px solid #EEF1F1;border-radius:20px;padding:18px;margin-bottom:12px">
+                  <div style="font-size:13px;font-weight:700;color:#6B7280;margin-bottom:12px">어디에 물어보면 되나요</div>
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <div><div style="font-size:15.5px;font-weight:700;color:#111827">외국인종합안내센터 1345</div><div style="font-size:13px;color:#6B7280;margin-top:2px">20개 언어 통역 · 평일 09:00–18:00</div></div>
+                    <div style="height:1px;background:#F2F4F4"></div>
+                    <div><div style="font-size:15.5px;font-weight:700;color:#111827">계좌를 만든 은행 영업점</div><div style="font-size:13px;color:#6B7280;margin-top:2px">외국환 거래 담당 창구에 문의</div></div>
+                  </div>
+                </div>
+
+                <div style="background:#F6F8F8;border-radius:20px;padding:16px;margin-bottom:12px">
+                  <div style="font-size:13px;font-weight:700;color:#6B7280;margin-bottom:6px">왜 멈췄나요</div>
+                  <div style="font-size:14.5px;line-height:1.6;color:#4B5563">이 조합은 규칙 DB 6건 중 <b>대조되지 않은 1건</b>에 해당합니다. 출처(기관명·문서명·확인일)가 확보되면 자동으로 열립니다.</div>
+                </div>
+
+                <div style="font-size:12.5px;color:#9CA3AF;line-height:1.6">정보 기준일 2026.09.06 · 근거가 없으면 답하지 않습니다</div>
+              </div>
+              <div style="padding:14px 20px 26px;border-top:1px solid #EEF1F1">
+                <div style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;background:#374151;color:#fff">1345로 전화하기</div>
+                <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">근거가 생기면 알림으로 알려드릴까요?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12.5px;font-weight:600;color:#6B7280">행동 실행 — 판독 실패 / 미체크 빈 상태</div>
+          <div style="width:410px;height:864px;border-radius:52px;background:#111417;padding:10px;box-shadow:0 30px 60px -20px rgba(9,40,38,.35)">
+            <div style="width:390px;height:844px;border-radius:42px;overflow:hidden;background:#FFFFFF;position:relative;display:flex;flex-direction:column">
+              <div style="height:52px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:15px;font-weight:600;color:#111827"><span>9:41</span><span style="font-size:11px;letter-spacing:2px">▮▮▮ ᯤ ▰</span></div>
+              <div style="flex:1;overflow:hidden;padding:0 20px">
+                <div style="display:flex;align-items:center;gap:12px;height:48px"><div style="font-size:19px;color:#111827;margin-left:-4px">‹</div><div style="font-size:16px;font-weight:700;color:#111827">준비물 챙기기</div></div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px"><div style="flex:1;height:8px;border-radius:99px;background:#EEF1F1;overflow:hidden"><div style="width:50%;height:100%;background:#0D7C74;border-radius:99px"></div></div><div style="font-size:12.5px;font-weight:700;color:#0D7C74">2단계 중 1단계</div></div>
+
+                <div style="font-size:22px;font-weight:800;letter-spacing:-0.5px;color:#111827;margin-bottom:4px">챙길 서류 0가지 / 3가지</div>
+                <div style="font-size:14.5px;color:#6B7280;margin-bottom:16px">아직 하나도 체크하지 않았어요.</div>
+                <div style="border:1px solid #EEF1F1;border-radius:20px;overflow:hidden;margin-bottom:22px">
+                  <div style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px;border-bottom:1px solid #F2F4F4"><div style="width:26px;height:26px;border-radius:99px;border:1.5px solid #D5DAD9"></div><div style="font-size:16px;font-weight:600;color:#111827">여권</div></div>
+                  <div style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px;border-bottom:1px solid #F2F4F4"><div style="width:26px;height:26px;border-radius:99px;border:1.5px solid #D5DAD9"></div><div style="font-size:16px;font-weight:600;color:#111827">외국인등록증</div></div>
+                  <div style="min-height:60px;display:flex;align-items:center;gap:13px;padding:12px 16px"><div style="width:26px;height:26px;border-radius:99px;border:1.5px solid #D5DAD9"></div><div style="font-size:16px;font-weight:600;color:#111827">재학증명서 또는 입학허가서</div></div>
+                </div>
+
+                <div style="border:1.5px solid #F0DCC2;border-radius:20px;background:#FEF9F2;padding:20px;display:flex;flex-direction:column;align-items:center;gap:8px">
+                  <div style="width:44px;height:44px;border-radius:14px;background:#FBE7CD;display:flex;align-items:center;justify-content:center;font-size:19px;color:#B45309">◉</div>
+                  <div style="font-size:16px;font-weight:700;color:#8A3F07;text-align:center;line-height:1.5">글자가 잘 안 보여요</div>
+                  <div style="font-size:14px;color:#7A5C39;text-align:center;line-height:1.6">밝은 곳에서 다시 찍어주시면 좋아요. 서류 전체가 화면에 들어오게 찍으면 더 잘 읽어요.</div>
+                  <div style="margin-top:8px;min-height:46px;padding:0 22px;border-radius:14px;background:#B45309;color:#fff;font-size:15px;font-weight:700;display:flex;align-items:center">다시 찍기</div>
+                  <div style="font-size:13px;color:#8A6236;text-decoration:underline;margin-top:2px">사진 없이 계속하기</div>
+                </div>
+              </div>
+              <div style="padding:14px 20px 26px;border-top:1px solid #EEF1F1">
+                <div style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;background:#EEF1F1;color:#9CA3AF">확인 화면으로</div>
+                <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">준비물을 하나 이상 체크하면 넘어갈 수 있어요</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:12.5px;font-weight:600;color:#6B7280">홈 — 선택 전 빈 상태 / 비활성 CTA</div>
+          <div style="width:410px;height:864px;border-radius:52px;background:#111417;padding:10px;box-shadow:0 30px 60px -20px rgba(9,40,38,.35)">
+            <div style="width:390px;height:844px;border-radius:42px;overflow:hidden;background:#FFFFFF;position:relative;display:flex;flex-direction:column">
+              <div style="height:52px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 28px 0 32px;font-size:15px;font-weight:600;color:#111827"><span>9:41</span><span style="font-size:11px;letter-spacing:2px">▮▮▮ ᯤ ▰</span></div>
+              <div style="flex:1;overflow:hidden;padding:4px 20px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+                  <div style="display:flex;align-items:center;gap:8px"><div style="width:26px;height:26px;border-radius:8px;background:#0D7C74;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">K</div><div style="font-size:17px;font-weight:800;color:#111827">KO-Finance Buddy</div></div>
+                  <div style="display:flex;gap:4px"><div style="padding:5px 9px;border-radius:999px;background:#0D7C74;color:#fff;font-size:11px;font-weight:700">한국어</div><div style="padding:5px 9px;border-radius:999px;background:#F6F8F8;color:#6B7280;font-size:11px;font-weight:600">EN</div><div style="padding:5px 9px;border-radius:999px;background:#F6F8F8;color:#6B7280;font-size:11px;font-weight:600">VI</div></div>
+                </div>
+                <div style="background:#E6F4F1;border-radius:14px;padding:11px 13px;display:flex;gap:9px;margin-bottom:18px">
+                  <div style="width:18px;height:18px;flex:none;border-radius:6px;background:#0D7C74;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:1px">✓</div>
+                  <div style="font-size:12.5px;line-height:1.55;color:#0B5A54;font-weight:500">규칙 DB <b>5/6건</b> 공식근거 검증 · 확인일 2026.09.06<br><span style="color:#0D7C74">근거가 없으면 답하지 않습니다</span></div>
+                </div>
+                <div style="border-radius:20px;padding:20px;background:#F6F8F8;border:1px dashed #D5DAD9;margin-bottom:16px">
+                  <div style="font-size:12.5px;font-weight:700;color:#9CA3AF;margin-bottom:10px">내 상황</div>
+                  <div style="font-size:23px;font-weight:800;line-height:1.35;color:#9CA3AF;letter-spacing:-0.5px">두 가지만 고르면<br>바로 알려드려요</div>
+                  <div style="margin-top:18px;display:flex;align-items:center;gap:10px"><div style="flex:1;height:8px;border-radius:99px;background:#E5EAEA"></div><div style="font-size:12.5px;font-weight:700;color:#9CA3AF">2단계 중 0단계</div></div>
+                </div>
+                <div style="font-size:14.5px;font-weight:700;color:#111827;margin-bottom:10px">1. 체류자격을 고르세요</div>
+                <div style="display:flex;gap:8px;margin-bottom:20px">
+                  <div style="flex:1;min-height:52px;display:flex;flex-direction:column;justify-content:center;padding:8px 14px;border-radius:14px;border:1.5px solid #E5EAEA;background:#fff"><div style="font-size:15px;font-weight:700;color:#374151">D-2 유학생</div><div style="font-size:11.5px;color:#6B7280">대학·대학원 재학</div></div>
+                  <div style="flex:1;min-height:52px;display:flex;flex-direction:column;justify-content:center;padding:8px 14px;border-radius:14px;border:1.5px solid #E5EAEA;background:#fff"><div style="font-size:15px;font-weight:700;color:#374151">E-9 비전문취업</div><div style="font-size:11.5px;color:#6B7280">고용허가제 근로</div></div>
+                </div>
+                <div style="font-size:14.5px;font-weight:700;color:#111827;margin-bottom:10px">2. 무엇을 하려고 하세요?</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <div style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;border:1.5px solid #E5EAEA;font-size:14.5px;font-weight:600;color:#374151">계좌 만들기</div>
+                  <div style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;border:1.5px solid #E5EAEA;font-size:14.5px;font-weight:600;color:#374151">급여·알바비 받을 계좌</div>
+                  <div style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;border:1.5px solid #E5EAEA;font-size:14.5px;font-weight:600;color:#374151">이체한도 풀기</div>
+                  <div style="min-height:46px;display:flex;align-items:center;padding:0 16px;border-radius:14px;border:1.5px solid #E5EAEA;font-size:14.5px;font-weight:600;color:#374151">본국으로 송금하기</div>
+                </div>
+              </div>
+              <div style="padding:14px 20px 26px;border-top:1px solid #EEF1F1">
+                <div style="height:56px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;background:#EEF1F1;color:#9CA3AF">내 상황으로 확인하기</div>
+                <div style="text-align:center;font-size:12px;color:#9CA3AF;margin-top:8px">체류자격과 금융업무를 모두 고르면 켜집니다</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;result&quot;,&quot;prep&quot;,&quot;confirm&quot;,&quot;done&quot;],&quot;default&quot;:&quot;home&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;프로토타입&quot;},&quot;checklistPrefilled&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;프로토타입&quot;}}">
+class Component extends DCLogic {
+  state = {
+    screen: 'home', visa: null, task: null,
+    a1: false, a2: false,
+    c1: false, c2: false, c3: false,
+    doc: 'idle', finishing: false
+  };
+  componentDidMount() {
+    if (!document.getElementById('kfb-spin')) {
+      const s = document.createElement('style'); s.id = 'kfb-spin';
+      s.textContent = '@keyframes spin{to{transform:rotate(360deg)}}';
+      document.head.appendChild(s);
+    }
+    if (this.props.checklistPrefilled) this.setState({ c1: true, c2: true, c3: true });
+    if (this.props.startScreen && this.props.startScreen !== 'home') this.setState({ screen: this.props.startScreen });
+  }
+  set(k, v) { this.setState({ [k]: v }); }
+  renderVals() {
+    const s = this.state;
+    const both = !!s.visa && !!s.task;
+    const step = both ? 2 : (s.visa || s.task ? 1 : 0);
+    const chip = (on) => ({
+      border: on ? '#0D7C74' : '#E5EAEA',
+      bg: on ? '#E6F4F1' : '#FFFFFF',
+      fg: on ? '#0B5A54' : '#374151'
+    });
+    const d2 = chip(s.visa === 'D-2'), e9 = chip(s.visa === 'E-9');
+    const t = ['계좌 만들기', '급여·알바비 받을 계좌', '이체한도 풀기', '본국으로 송금하기'].map(x => chip(s.task === x));
+    const checked = [s.c1, s.c2, s.c3].filter(Boolean).length;
+    const cs = (on) => ({
+      bg: on ? '#F7FBFA' : '#FFFFFF',
+      box: on ? '#0D7C74' : 'transparent',
+      border: on ? '#0D7C74' : '#D5DAD9',
+      mark: on ? '✓' : ''
+    });
+    const k1 = cs(s.c1), k2 = cs(s.c2), k3 = cs(s.c3);
+    const names = { home: '홈 — 내 상황', result: '상세 — 판정 결과', prep: '행동 실행 — 준비물', confirm: '확인 — 최종 점검', done: '완료' };
+    const pick = (key, val) => () => this.setState(st => ({ [key]: st[key] === val ? null : val }));
+    return {
+      screenName: names[s.screen],
+      isHome: s.screen === 'home', isResult: s.screen === 'result', isPrep: s.screen === 'prep',
+      isConfirm: s.screen === 'confirm', isDone: s.screen === 'done',
+      heroBg: both ? '#E6F4F1' : '#F6F8F8',
+      heroBorder: both ? '#CBE5E0' : '#E5EAEA',
+      heroColor: both ? '#0B3E3A' : '#9CA3AF',
+      heroSize: both ? '25px' : '23px',
+      heroText: both ? (s.visa + ' · ' + s.task) : '두 가지만 고르면\n바로 알려드려요',
+      heroSub: both ? '이 조합의 규칙은 공식 출처로 대조되어 있어요.' : (step === 1 ? '하나만 더 고르면 됩니다.' : '체류자격과 금융업무를 고르세요.'),
+      progressPct: (step * 50) + '%',
+      stepDone: step,
+      d2Border: d2.border, d2Bg: d2.bg, d2Fg: d2.fg,
+      e9Border: e9.border, e9Bg: e9.bg, e9Fg: e9.fg,
+      t1Border: t[0].border, t1Bg: t[0].bg, t1Fg: t[0].fg,
+      t2Border: t[1].border, t2Bg: t[1].bg, t2Fg: t[1].fg,
+      t3Border: t[2].border, t3Bg: t[2].bg, t3Fg: t[2].fg,
+      t4Border: t[3].border, t4Bg: t[3].bg, t4Fg: t[3].fg,
+      pickD2: pick('visa', 'D-2'), pickE9: pick('visa', 'E-9'),
+      pickT1: pick('task', '계좌 만들기'), pickT2: pick('task', '급여·알바비 받을 계좌'),
+      pickT3: pick('task', '이체한도 풀기'), pickT4: pick('task', '본국으로 송금하기'),
+      ctaBg: both ? '#0D7C74' : '#EEF1F1',
+      ctaFg: both ? '#FFFFFF' : '#9CA3AF',
+      ctaCursor: both ? 'pointer' : 'not-allowed',
+      ctaHint: both ? '개인정보는 저장하지 않아요' : '체류자격과 금융업무를 모두 고르면 켜집니다',
+      goResult: () => { if (both) this.setState({ screen: 'result' }); },
+      goHome: () => this.setState({ screen: 'home' }),
+      goPrep: () => this.setState({ screen: 'prep' }),
+      goConfirm: () => this.setState({ screen: 'confirm' }),
+      a1Icon: s.a1 ? '▲' : '▼', a2Icon: s.a2 ? '▲' : '▼',
+      a1Max: s.a1 ? '200px' : '0px', a2Max: s.a2 ? '200px' : '0px',
+      a1Gap: s.a1 ? '10px' : '0px', a2Gap: s.a2 ? '10px' : '0px',
+      toggleA1: () => this.setState(st => ({ a1: !st.a1 })),
+      toggleA2: () => this.setState(st => ({ a2: !st.a2 })),
+      toggleC1: () => this.setState(st => ({ c1: !st.c1 })),
+      toggleC2: () => this.setState(st => ({ c2: !st.c2 })),
+      toggleC3: () => this.setState(st => ({ c3: !st.c3 })),
+      c1Bg: k1.bg, c1Box: k1.box, c1Border: k1.border, c1Mark: k1.mark,
+      c2Bg: k2.bg, c2Box: k2.box, c2Border: k2.border, c2Mark: k2.mark,
+      c3Bg: k3.bg, c3Box: k3.box, c3Border: k3.border, c3Mark: k3.mark,
+      checkedCount: checked,
+      docIdle: s.doc === 'idle', docLoading: s.doc === 'loading', docDone: s.doc === 'done',
+      startScan: () => { this.setState({ doc: 'loading' }); setTimeout(() => this.setState({ doc: 'done' }), 1900); },
+      resetScan: () => this.setState({ doc: 'idle' }),
+      finishing: s.finishing,
+      finishLabel: s.finishing ? '저장하는 중…' : '체크리스트 저장하고 은행 갈 준비 끝내기',
+      finishBg: s.finishing ? '#0B6A63' : '#0D7C74',
+      finish: () => { if (s.finishing) return; this.setState({ finishing: true }); setTimeout(() => this.setState({ finishing: false, screen: 'done' }), 1100); }
+    };
+  }
+}
+</script>
+</body>
+</html>
