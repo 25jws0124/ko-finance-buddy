@@ -78,6 +78,7 @@ export default function Home({ s, lang, setLang, visa, task, toggleVisa, toggleT
 
         {/* ── 신뢰 배너 (수치는 getDbStatus 에서) ── */}
         <div
+          className="rise rise-1"
           style={{
             display: 'flex',
             gap: 10,
@@ -113,6 +114,7 @@ export default function Home({ s, lang, setLang, visa, task, toggleVisa, toggleT
 
         {/* ── Hero ── */}
         <div
+          className="rise rise-2 card-soft"
           style={{
             borderRadius: 20,
             padding: 20,
@@ -157,13 +159,14 @@ export default function Home({ s, lang, setLang, visa, task, toggleVisa, toggleT
         </div>
 
         {/* ── 1. 체류자격 ── */}
-        <div style={{ fontSize: 14.5, fontWeight: 700, marginBottom: 10 }}>{s.step1}</div>
+        <div className="rise rise-3" style={{ fontSize: 14.5, fontWeight: 700, marginBottom: 10 }}>{s.step1}</div>
         <div style={{ display: 'flex', gap: 8, marginBottom: 22 }}>
           {VISAS.map((v) => (
             <button
               key={v}
               onClick={() => toggleVisa(v)}
               aria-pressed={visa === v}
+              className={visa === v ? 'chip-on' : undefined}
               style={{
                 ...chip(visa === v),
                 flex: 1,
@@ -181,19 +184,27 @@ export default function Home({ s, lang, setLang, visa, task, toggleVisa, toggleT
         </div>
 
         {/* ── 2. 금융업무 ── */}
-        <div style={{ fontSize: 14.5, fontWeight: 700, marginBottom: 10 }}>{s.step2}</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+        <div className="rise rise-4" style={{ fontSize: 14.5, fontWeight: 700, marginBottom: 10 }}>{s.step2}</div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {TASKS.map((k) => (
             <button
               key={k}
               onClick={() => toggleTask(k)}
               aria-pressed={task === k}
+              className={task === k ? 'chip-on' : undefined}
               style={{
                 ...chip(task === k),
-                minHeight: 46,
-                padding: '0 16px',
-                fontSize: 14.5,
+                minHeight: 52,
+                padding: '8px 14px',
+                fontSize: 14,
                 fontWeight: 600,
+                lineHeight: 1.35,
+                // 한국어는 단어 중간에서 줄바꿈되면 읽기 어렵다 → 어절 단위로만 끊는다
+                wordBreak: 'keep-all',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
               }}
             >
               {s.task[k]}

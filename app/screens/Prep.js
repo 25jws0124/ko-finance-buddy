@@ -154,7 +154,7 @@ export default function Prep({ s, lang, visa, task, verdict, checks, setChecks, 
                   justifyContent: 'center',
                 }}
               >
-                {checks[i] ? '✓' : ''}
+                {checks[i] ? <span className="check-pop">✓</span> : ''}
               </span>
               <span>
                 {/* 서류 이름은 창구에서 보여줘야 하므로 한국어 유지 + 선택 언어 병기 */}

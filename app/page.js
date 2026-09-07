@@ -42,6 +42,8 @@ export default function Page() {
 
   return (
     <main className="app">
+      {/* key={screen} 이 바뀔 때마다 래퍼가 새로 마운트되어 전환 애니메이션이 재생된다 */}
+      <div key={screen} className="screen">
       {screen === 'home' ? (
         <Home
           s={s}
@@ -101,6 +103,7 @@ export default function Page() {
       {screen === 'done' && verdict?.status === 'ok' ? (
         <Done s={s} lang={lang} task={task} verdict={verdict} checks={checks} onHome={goHome} />
       ) : null}
+      </div>
     </main>
   );
 }

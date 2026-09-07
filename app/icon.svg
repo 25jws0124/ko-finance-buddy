@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="KO-Finance Buddy">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0F8F86"/>
+      <stop offset="100%" stop-color="#0B5A54"/>
+    </linearGradient>
+  </defs>
+
+  <!-- 브랜드 라운드 스퀘어 -->
+  <rect width="512" height="512" rx="116" fill="url(#bg)"/>
+
+  <!-- 서류 카드: 이 서비스가 다루는 대상 -->
+  <rect x="150" y="126" width="212" height="260" rx="26" fill="#FFFFFF" opacity="0.97"/>
+
+  <!-- 문서의 줄 -->
+  <rect x="186" y="176" width="140" height="18" rx="9" fill="#0B5A54" opacity="0.30"/>
+  <rect x="186" y="216" width="104" height="18" rx="9" fill="#0B5A54" opacity="0.18"/>
+
+  <!-- 확인된 근거 = 체크. 서비스의 핵심 약속 -->
+  <path d="M188 296 L232 340 L326 246"
+        fill="none" stroke="#0D7C74" stroke-width="34"
+        stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
