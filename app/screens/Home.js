@@ -1,6 +1,7 @@
 'use client';
 
 import { CtaBar } from '../ui';
+import Logo from '../logo';
 import { LANGS, fmtDate } from '@/lib/i18n';
 import { VISAS, TASKS } from '@/lib/engine';
 
@@ -34,22 +35,7 @@ export default function Home({ s, lang, setLang, visa, task, toggleVisa, toggleT
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div
-              style={{
-                width: 28,
-                height: 28,
-                borderRadius: 8,
-                background: 'var(--teal-600)',
-                color: '#fff',
-                fontSize: 14,
-                fontWeight: 800,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              K
-            </div>
+            <Logo size={28} radius={8} />
             <div style={{ fontSize: 17, fontWeight: 800, letterSpacing: '-0.3px' }}>
               {s.appName}
             </div>

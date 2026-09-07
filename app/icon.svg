@@ -5,19 +5,9 @@
       <stop offset="100%" stop-color="#0B5A54"/>
     </linearGradient>
   </defs>
-
-  <!-- 브랜드 라운드 스퀘어 -->
   <rect width="512" height="512" rx="116" fill="url(#bg)"/>
-
-  <!-- 서류 카드: 이 서비스가 다루는 대상 -->
-  <rect x="150" y="126" width="212" height="260" rx="26" fill="#FFFFFF" opacity="0.97"/>
-
-  <!-- 문서의 줄 -->
-  <rect x="186" y="176" width="140" height="18" rx="9" fill="#0B5A54" opacity="0.30"/>
-  <rect x="186" y="216" width="104" height="18" rx="9" fill="#0B5A54" opacity="0.18"/>
-
-  <!-- 확인된 근거 = 체크. 서비스의 핵심 약속 -->
-  <path d="M188 296 L232 340 L326 246"
-        fill="none" stroke="#0D7C74" stroke-width="34"
+  <rect x="152" y="128" width="208" height="256" rx="30" fill="#FFFFFF" opacity="0.97"/>
+  <rect x="192" y="180" width="128" height="24" rx="12" fill="#0B5A54" opacity="0.28"/>
+  <path d="M190 292 L236 338 L326 244" fill="none" stroke="#0D7C74" stroke-width="44"
         stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
